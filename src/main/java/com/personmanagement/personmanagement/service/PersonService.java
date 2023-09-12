@@ -36,7 +36,7 @@ public class PersonService {
             throw new ResourceException("Person not found with id: " + id);
         }
 
-        updatedPerson.setId(id);
+        //updatedPerson.setId(id);
         return personRepository.save(updatedPerson);
     }
 
