@@ -39,11 +39,12 @@ public class PersonController {
         Optional<PersonEntity> person = personService.getPersonById(id);
 
         if (person.isPresent()) {
-            // If a person with the given ID is found, return it
+            // If a person with the given ID exists, return their details
             return new ResponseEntity<>(person.get(), HttpStatus.OK);
         } else {
-            // If no person with the given ID is found, return a "not found" response
-            return new ResponseEntity<>("Person with ID " + id + " not found", HttpStatus.NOT_FOUND);
+            // If no person with the given ID is found, return a 404 Not Found response
+            ErrorResponse errorResponse = new ErrorResponse("Person with ID " + id + " not found");
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -103,10 +104,11 @@ public class PersonController {
             throw new ResourceException("Person with ID " + id + " not found");
         }
 
-        String successMessage = "Updated successfully";
+            String successMessage = "Updated successfully";
 
-        DataResponse<PersonEntity> response = new DataResponse<>(successMessage, person);
+            DataResponse<PersonEntity> response = new DataResponse<>(successMessage, person);
             return new ResponseEntity<>(response, HttpStatus.OK);
+
 
         } catch (IllegalArgumentException e) {
             // If any validation fails, return a JSON response with the error message
@@ -124,15 +126,28 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePerson(@PathVariable Long id) {
         try {
-           personService.deletePerson(id);
+            // Check if the person with the given ID exists
+            Optional<PersonEntity> existingPerson = personService.getPersonById(id);
 
-            String successMessage = "Person with ID " + id + " deleted successfully";
+            if (existingPerson.isPresent()) {
+                // Person exists, so proceed with deletion
+                personService.deletePerson(id);
 
-            DeleteResponse response = new DeleteResponse(successMessage);
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+                String successMessage = "Person with ID " + id + " deleted successfully";
+
+                // Print the success message to the console (optional)
+                System.out.println(successMessage);
+
+                // Return a 204 No Content response
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                // Person with the provided ID does not exist
+                ErrorResponse errorResponse = new ErrorResponse("Person with ID " + id + " not found");
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            }
         } catch (ResourceException e) {
-            // Handle the exception and return a custom JSON response
-            ErrorResponse errorResponse = new ErrorResponse("Person with ID " + id + " not found");
+            // Handle other exceptions if necessary and return an appropriate response
+            ErrorResponse errorResponse = new ErrorResponse("An error occurred while deleting the person");
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
