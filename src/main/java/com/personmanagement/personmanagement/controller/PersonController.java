@@ -74,7 +74,7 @@ public class PersonController {
             String successMessage = "Saved successfully";
 
             DataResponse<PersonEntity> response = new DataResponse<>(successMessage, createdPerson);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
             // If any validation fails, return a JSON response with the error message
@@ -129,7 +129,7 @@ public class PersonController {
             String successMessage = "Person with ID " + id + " deleted successfully";
 
             DeleteResponse response = new DeleteResponse(successMessage);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         } catch (ResourceException e) {
             // Handle the exception and return a custom JSON response
             ErrorResponse errorResponse = new ErrorResponse("Person with ID " + id + " not found");
