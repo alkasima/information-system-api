@@ -139,11 +139,9 @@ public class PersonController {
 
                 String successMessage = "Person with ID " + id + " deleted successfully";
 
-                // Print the success message to the console (optional)
-                System.out.println(successMessage);
-
-                // Return a 204 No Content response
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                // Create a DataResponse with the deleted person
+                DataResponse<PersonEntity> response = new DataResponse<>(successMessage, existingPerson.get());
+                return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 // Person with the provided ID does not exist
                 ErrorResponse errorResponse = new ErrorResponse("Person with ID " + id + " not found");
