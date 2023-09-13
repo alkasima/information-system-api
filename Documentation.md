@@ -67,9 +67,107 @@ Open a web browser and navigate to http://localhost:8080/api (assuming your appl
 Make sure to replace the placeholders in the application.properties file with your actual PostgreSQL database credentials and database name. 
 This Spring Boot application should now be running locally with PostgreSQL as the database.
 
-## More Details With Test Script Code
-[here](https://github.com/alkasima/information-system-api/blob/master/Documentation.md)
 
-## For Complete Endpoint Documentation
+## Test Script Code for testing this API
+#Create Test Script
+// Check if the response status code is 201 Created
+pm.test("Status code is 201 Created", function () {
+    pm.response.to.have.status(201);
+});
+
+// Check if the response body contains the newly created person's first name
+pm.test("Response body contains 'Mark'", function () {
+    pm.expect(pm.response.text()).to.include("Mark");
+});
+
+// Check if the response body contains the newly created person's last name
+pm.test("Response body contains 'Essein'", function () {
+    pm.expect(pm.response.text()).to.include("Essien");
+});
+
+#Test Result
+PASS
+Status code is 201 Created
+FAIL
+Response body contains 'Mark' | AssertionError: expected '{"message":"Saved successfully","data…' to include 'Mark'
+PASS
+Response body contains 'Essein'
+
+#Read Test Script
+// Check if the response status code is 200 OK
+pm.test("Status code is 200 OK", function () {
+    pm.response.to.have.status(200);
+});
+
+// Check if the response body is not empty
+pm.test("Response body is not empty", function () {
+    pm.expect(pm.response.text()).not.to.be.empty;
+});
+
+// Parse the response JSON
+var responseBody = pm.response.json();
+
+// Check if the response JSON contains the first name and last name
+pm.test("Response contains first name 'Mark'", function () {
+    pm.expect(responseBody.firstName).to.eql("Mark");
+});
+
+pm.test("Response contains last name 'Essien'", function () {
+    pm.expect(responseBody.lastName).to.eql("Essien");
+});
+
+#Result 
+PASS
+Status code is 200 OK
+PASS
+Response body is not empty
+PASS
+Response contains first name 'Mark'
+PASS
+Response contains last name 'Essien'
+
+# Update Test Script
+// Check if the response status code is 200 OK 
+pm.test("Status code is 200 OK", function () {
+    pm.response.to.have.status(200);
+});
+
+// Check if the response body is not empty
+pm.test("Response body is not empty", function () {
+    pm.expect(pm.response.text()).not.to.be.empty;
+});
+
+// Check if the response body contains a success message
+pm.test("Response body contains 'Updated successfully'", function () {
+    pm.expect(pm.response.text()).to.include("Updated successfully");
+});
+
+#Result
+PASS
+Status code is 200 OK
+PASS
+Response body is not empty
+PASS
+Response body contains 'Updated successfully'
+
+# Delete Test Script
+// Check if the response status code is 204 No Content
+pm.test("Status code is 204 No Content", function () {
+    pm.response.to.have.status(204);
+});
+
+// Check if the response body is empty
+pm.test("Response body is empty", function () {
+    pm.expect(pm.response.text()).to.be.empty;
+});
+
+#Result
+PASS
+Status code is 204 No Content
+PASS
+Response body is empty
+
+
+## For Complete Documentation on Endpoint
 [here](https://documenter.getpostman.com/view/18112964/2s9YC4UD7X#afdfb0c8-dff0-4148-a68f-6b814d3587b7)
 
