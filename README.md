@@ -67,6 +67,9 @@ Open a web browser and navigate to http://localhost:8080/api (assuming your appl
 Make sure to replace the placeholders in the application.properties file with your actual PostgreSQL database credentials and database name. 
 This Spring Boot application should now be running locally with PostgreSQL as the database.
 
-## FOR COMPLETE ENDPOINT DOCUMENTATION
+## More Details With Test Script Code
+[here](https://github.com/alkasima/information-system-api/blob/master/Documentation.md)
+
+## For Complete Endpoint Documentation
 [here](https://documenter.getpostman.com/view/18112964/2s9YC4UD7X#afdfb0c8-dff0-4148-a68f-6b814d3587b7)
 
