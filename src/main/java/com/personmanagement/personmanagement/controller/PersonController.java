@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,9 +32,12 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<List<PersonEntity>> getAllPersons() {
         List<PersonEntity> persons = personService.getAllPersons();
+
+        // Sort the list by id in ascending order
+        persons.sort(Comparator.comparingLong(PersonEntity::getId));
+
         return new ResponseEntity<>(persons, HttpStatus.OK);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getPersonById(@PathVariable Long id) {
         Optional<PersonEntity> person = personService.getPersonById(id);

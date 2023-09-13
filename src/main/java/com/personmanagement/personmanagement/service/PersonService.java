@@ -36,10 +36,11 @@ public class PersonService {
             throw new ResourceException("Person not found with id: " + id);
         }
 
-        //updatedPerson.setId(id);
+        // Set the ID of the updatedPerson to match the provided ID
+        updatedPerson.setId(id);
+
         return personRepository.save(updatedPerson);
     }
-
     public void deletePerson(Long id) {
         personRepository.deleteById(id);
     }
